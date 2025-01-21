@@ -33,11 +33,8 @@ RUN chown app:app /app
 # Copy the Pre-built binary file from the previous stage
 COPY --from=build /app/cmd/main /app/main
 
-# Copy the migrations directory from the source code to the Working Directory inside the container
-COPY --from=build /app/db/migrations /app/db/migrations
-
 # Change the ownership of the binary file and migrations directory to the app user
-RUN chown -R app:app /app/main /app/db/migrations
+RUN chown -R app:app /app/main
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
