@@ -28,7 +28,7 @@ func InitDB(ctx context.Context, dsn string) (*gorm.DB, error) {
 
 	// Open the database connection
 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{
-		DisableForeignKeyConstraintWhenMigrating: true,
+		DisableForeignKeyConstraintWhenMigrating: false,
 		PrepareStmt:                              true,
 		Logger:                                   logger.Default.LogMode(logMode),
 	})

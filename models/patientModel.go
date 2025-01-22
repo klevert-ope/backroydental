@@ -126,7 +126,7 @@ type Appointment struct {
 	DateTime  string    `gorm:"column:date_time;not null;index" json:"date_time"`
 	CreatedAt time.Time `gorm:"column:created_at;autoCreateTime" json:"created_at"`
 	Status    string    `gorm:"column:status;check:status IN ('scheduled', 'fulfilled', 'cancelled');default:'scheduled';not null" json:"status"`
-	Patient   Patient   `gorm:"foreignKey:PatientID;references:ID" json:"-"`
+	Patient   Patient   `gorm:"foreignKey:PatientID;references:ID" json:"patient"`
 	Doctor    Doctor    `gorm:"foreignKey:DoctorID;references:ID" json:"-"`
 }
 

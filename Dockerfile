@@ -3,7 +3,7 @@ FROM golang:1.23.2-alpine AS build
 
 LABEL maintainer="Klevert Opee"
 LABEL description="Backend API"
-LABEL version=2.0
+LABEL version=1.0
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -43,4 +43,4 @@ EXPOSE 8000
 USER app
 
 # Command to run the executable
-CMD ["./main"]
+ENTRYPOINT ["./main"]
