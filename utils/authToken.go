@@ -12,7 +12,7 @@ import (
 
 const (
 	// Set expiration times for access and refresh tokens.
-	AccessTokenExpiry  = time.Hour
+	AccessTokenExpiry  = 24 * time.Hour
 	RefreshTokenExpiry = 7 * 24 * time.Hour
 )
 
