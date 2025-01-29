@@ -24,6 +24,7 @@ func (ac *AuthController) RegisterRoutes(router *gin.Engine) {
 	router.POST("/auth/register", ac.Handler.Register)
 	router.POST("/auth/login", ac.Handler.Login)
 	router.DELETE("auth/delete-account/:id", ac.Handler.DeleteAccount)
+	router.POST("auth/decrypt", ac.Handler.DecryptHandler)
 
 	// Protected routes: Requires a valid token
 	authGroup := router.Group("/auth").Use(middlewares.TokenAuthMiddleware())

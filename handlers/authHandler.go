@@ -6,6 +6,7 @@ import (
 	"RoyDental/utils"
 	"fmt"
 	"log"
+	"net/http"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -81,7 +82,6 @@ func (h *AuthHandler) Login(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"accessToken":  accessToken,
 		"refreshToken": refreshToken,
-		"role":         user.Role.Name,
 	})
 }
 
@@ -345,4 +345,34 @@ func (h *AuthHandler) AdminManageUsers(c *gin.Context) {
 	}
 
 	c.JSON(200, users)
+}
+
+// DecryptRequest represents the expected JSON request body
+type DecryptRequest struct {
+	Token string `json:"token" binding:"required"`
+}
+
+// DecryptHandler decrypts a PASETO token and returns the extracted claims
+func (h *AuthHandler) DecryptHandler(c *gin.Context) {
+	var req DecryptRequest
+
+	// Bind JSON request body
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		return
+	}
+
+	// Validate and decrypt the token
+	claims, err := utils.ValidateToken(req.Token)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid or expired token"})
+		return
+	}
+
+	// Return the decoded claims
+	c.JSON(200, gin.H{
+		"userId": claims.UserID,
+		"role":   claims.Role,
+		"expiry": claims.Expiry,
+	})
 }
