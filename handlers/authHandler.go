@@ -31,6 +31,15 @@ func extractAccessToken(c *gin.Context) (string, error) {
 	return token, nil
 }
 
+// Helper function to extract token from URL query parameters
+func extractRefreshToken(c *gin.Context) (string, error) {
+	token := c.DefaultQuery("refreshToken", "")
+	if token == "" {
+		return "", fmt.Errorf("refresh token is required")
+	}
+	return token, nil
+}
+
 // Register handles new user registration
 func (h *AuthHandler) Register(c *gin.Context) {
 	var user models.User
@@ -88,7 +97,7 @@ func (h *AuthHandler) Login(c *gin.Context) {
 // RefreshToken refreshes the user's access token
 func (h *AuthHandler) RefreshToken(c *gin.Context) {
 	// Extract token from URL query parameters
-	token, err := extractAccessToken(c)
+	token, err := extractRefreshToken(c)
 	if err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
