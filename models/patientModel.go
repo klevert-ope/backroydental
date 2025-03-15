@@ -33,8 +33,8 @@ type Patient struct {
 	CoverLimit        float64            `gorm:"column:cover_limit" json:"cover_limit"`
 	Occupation        string             `gorm:"column:occupation" json:"occupation"`
 	PlaceOfWork       string             `gorm:"column:place_of_work" json:"place_of_work"`
-	Phone             string             `gorm:"column:phone;unique;not null" json:"phone"`
-	Email             string             `gorm:"column:email;unique" json:"email"`
+	Phone             string             `gorm:"column:phone" json:"phone"`
+	Email             string             `gorm:"column:email" json:"email"`
 	Address           string             `gorm:"column:address" json:"address"`
 	CreatedAt         time.Time          `gorm:"column:created_at;autoCreateTime" json:"created_at"`
 	EmergencyContacts []EmergencyContact `gorm:"foreignKey:PatientID;references:ID" json:"-"`
