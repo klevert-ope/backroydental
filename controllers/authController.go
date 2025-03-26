@@ -25,12 +25,12 @@ func (ac *AuthController) RegisterRoutes(router *gin.Engine) {
 	router.POST("/auth/login", ac.Handler.Login)
 	router.DELETE("auth/delete-account/:id", ac.Handler.DeleteAccount)
 	router.POST("auth/decrypt", ac.Handler.DecryptHandler)
+	router.POST("/send-reset-code", ac.Handler.SendResetCode)
+	router.POST("/change-password", ac.Handler.ChangePassword)
 
 	// Protected routes: Requires a valid token
 	authGroup := router.Group("/auth").Use(middlewares.TokenAuthMiddleware())
 	{
-		authGroup.POST("/send-reset-code", ac.Handler.SendResetCode)
-		authGroup.POST("/change-password", ac.Handler.ChangePassword)
 		authGroup.POST("/change-email", ac.Handler.ChangeEmail)
 		authGroup.POST("/logoff", ac.Handler.Logoff)
 		authGroup.GET("/user/profile", ac.Handler.GetUserProfile)
